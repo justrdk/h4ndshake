@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import searchResults from './searchResults/searchResults';
 
 const appReducer = combineReducers({
-	searchResults,
+  searchResults,
 });
 
 export default appReducer;

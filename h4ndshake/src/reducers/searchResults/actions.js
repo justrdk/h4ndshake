@@ -2,16 +2,16 @@ import * as constants from './constants';
 import { searchAll } from '../../services/searchService';
 
 export const searchRequest = () => ({
-	type: constants.SEARCH_REQUEST,
+  type: constants.SEARCH_REQUEST,
 });
 
 export const searchRequestFail = () => ({
-	type: constants.SEARCH_REQUEST_FAIL,
+  type: constants.SEARCH_REQUEST_FAIL,
 });
 
 export const searchRequestSuccess = payload => ({
-	type: constants.SEARCH_REQUEST_SUCCESS,
-	payload,
+  type: constants.SEARCH_REQUEST_SUCCESS,
+  payload,
 });
 
 export const resetResults = () => ({
