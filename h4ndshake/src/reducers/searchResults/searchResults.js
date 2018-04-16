@@ -16,7 +16,7 @@ const searchResults = (state = initialState, action) => {
 			};
 		case constants.SEARCH_REQUEST_FAIL:
 			return {
-				..state,
+				...state,
 				loading: false,
 				results: [],
 			};
@@ -26,6 +26,12 @@ const searchResults = (state = initialState, action) => {
 				loading: false,
 				results: payload
 			}
+		case constants.SEARCH_RESET:
+			return {
+				...state,
+				loading: false,
+				results: [],
+			};
 		default:
 			return state;
 	}

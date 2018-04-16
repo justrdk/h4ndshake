@@ -14,6 +14,10 @@ export const searchRequestSuccess = payload => ({
 	payload,
 });
 
+export const resetResults = () => ({
+  type: constants.SEARCH_RESET,
+})
+
 export const search = query => ((dispatch) => {
   dispatch(searchRequest())
   return searchAll(query)

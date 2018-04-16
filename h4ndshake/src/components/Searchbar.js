@@ -1,74 +1,75 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Search } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
-import { search } from '../reducers/searchResults/actions';
+import { search, resetResults } from '../reducers/searchResults/actions';
+import SearchResults from './SearchResults';
+
+const debounceDelay = 500;
 
 class Searchbar extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			searchText: '',
-			results: this.props.results,
-		};
+	state = {
+		searchText: '',
 	}
 
 	resetSearch = () => {
-		this.setState({
-			searchText: '',
-			results: [],
-		});
+		const { reset } = this.props;
+		this.setState({ searchText: '' }, () => reset());
 	}
 
-	handleSearchChange = (ev { value }) => {
-		const { searchAll } = this.props;
-		this.setState({
-			searchText: value,
-		});
+	getSearchSuggesstions = (value) => {
+    const { search } = this.props;
+    search(value);
+  }
 
+  fetchResults = value => this.getSearchSuggesstions(value);
+
+	updateCollection = debounce(value =>
+    this.fetchResults(value), debounceDelay);
+
+  updateInputValue = inputValue => this.updateCollection(inputValue);
+
+	handleSearchChange = (ev, { value }) => {
 		if (value.length < 1) {
 			return this.resetSearch();
 		}
-
-		//call redux action to make call to server and fill results
+		this.setState({ searchText: value }, () => this.updateInputValue(value));
 	}
 
 	render() {
-		const { loading } = this.props;
-		const { results, searchText } = this.state;
+		const { loading, results } = this.props;
+		const { searchText } = this.state;
 
 		return (
+			<Fragment>
 			<Search
 				loading={loading}
-				results={results}
 				value={searchText}
-				onSearchChange={debounce(this.handleSearchChange, 500, { leading: true })}
+				results={results}
+				onSearchChange={this.handleSearchChange}
+				resultRenderer={SearchResults}
+				{...this.props}
 			 />
+			</Fragment>
 		)
 	}
 }
 
-Searchbar.name = 'Searchbar';
-
 Searchbar.propTypes = {
 	loading: PropTypes.bool,
 	results: PropTypes.array,
-	searchAll: PropTypes.func.isRequired,
-};
-
-Searchbar.defaultProps = {
-	loading: false,
-	results: [],
+	search: PropTypes.func.isRequired,
 };
 
 export const mapStateToProps = ({ searchResults }) => ({
 	loading: searchResults.loading,
-	results: searchResults.results
+	results: searchResults.results,
 });
 
 export const mapDispatchToProps = dispatch => ({
-	search: query => dispatch(search(query))
-})
+	search: query => dispatch(search(query)),
+	reset: () => dispatch(resetResults()),
+});
 
-export default Searchbar;
+export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);
