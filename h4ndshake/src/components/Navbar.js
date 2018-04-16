@@ -1,22 +1,30 @@
-import React, { Fragment } from 'react';
-import { Menu, Segment } from 'semantic-ui-react';
+import React from 'react';
+import { Menu, Segment, Container } from 'semantic-ui-react';
+import styled from 'styled-components';
 import Searchbar from './Searchbar';
 
-const Navbar = () => <Fragment>
-	<Menu attached='top'>
-	  <Menu.Item name='Campai' />
+const StyledMenu = styled(Menu)`
+	padding: 10px;
+`;
+
+const Navbar = () => <Container>
+	<StyledMenu size='big'
+		borderless
+		attached='top'
+		className='top-menu'>
+	  <Menu.Item header>Campai</Menu.Item>
 	  <Menu.Menu position='left'>
 	    <Searchbar />
 	  </Menu.Menu>
 	  <Menu.Item name='Startseite' />
 	  <Menu.Item name='Benachrichtigungen' />
-	</Menu>
+	</StyledMenu>
 	<Segment
 		attached='bottom'
 		padded
 	>
-		Developed by Osman Hernandez
+		Developed by Osman Hernandez using Semantic-UI for UI framework.
 	</Segment>
-</Fragment>
+</Container>
 
 export default Navbar;

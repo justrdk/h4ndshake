@@ -5,9 +5,10 @@ import Avatar from 'avataaars'
 
 const Contact = ({ first_name, last_name, city, avatar, org: { name }}) => <Item>
 	<Item.Content>
+    <Item.Header as='h3'>Contact</Item.Header>
 		<Item.Header>
 			 <Avatar
-          style={{width: '50px', height: '50px'}}
+          style={{width: '60px', height: '60px'}}
           avatarStyle='Circle'
           topType={avatar.top_type}
           accessoriesType={avatar.accessories_type}
@@ -21,7 +22,6 @@ const Contact = ({ first_name, last_name, city, avatar, org: { name }}) => <Item
           skinColor={avatar.skin_color}
         />
 		</Item.Header>
-		<Item.Header as='h3'>Contact</Item.Header>
 		<Item.Header as='h4'>{first_name} {last_name}</Item.Header>
 		<Item.Description><strong>City: </strong>{city}</Item.Description>
 		<Item.Description><strong>Name: </strong>{name}</Item.Description>
