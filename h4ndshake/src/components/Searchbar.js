@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Search } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 import { search, resetResults } from '../reducers/searchResults/actions';
@@ -42,7 +42,6 @@ class Searchbar extends Component {
     const { searchText } = this.state;
 
     return (
-      <Fragment>
       <Search
         loading={loading}
         value={searchText}
@@ -51,7 +50,6 @@ class Searchbar extends Component {
         resultRenderer={SearchResults}
         {...this.props}
        />
-      </Fragment>
     )
   }
 }
