@@ -1,3 +1,3 @@
-export { default as Contact } from './Contact';
-export { default as Org } from './Org';
-export { default as ContactGroup } from './ContactGroup';
+export { default as Contacts } from './Contacts';
+export { default as Orgs } from './Orgs';
+export { default as ContactGroups } from './ContactGroups';

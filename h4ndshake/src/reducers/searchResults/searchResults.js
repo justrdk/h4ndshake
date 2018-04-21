@@ -1,7 +1,7 @@
 import * as constants from './constants';
 
 const initialState = {
-  results: [],
+  results: {},
   loading: false,
 };
 
@@ -18,7 +18,7 @@ const searchResults = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        results: [],
+        results: {},
       };
     case constants.SEARCH_REQUEST_SUCCESS:
       return {
@@ -30,7 +30,7 @@ const searchResults = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        results: [],
+        results: {},
       };
     default:
       return state;

@@ -1,22 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Search } from 'semantic-ui-react';
+import { Input, Item } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
+import styled from 'styled-components';
 import { search, resetResults } from '../reducers/searchResults/actions';
-import SearchResults from './SearchResults';
+import { Contacts, Orgs, ContactGroups } from './partials';
 
-const debounceDelay = 500;
+const DEBOUNCE_DELAY = 300;
+
+const StyledSearchContent = styled.div`
+  min-width: 560px;
+  position: absolute;
+  background-color: #ffffff;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+  top: 68px;
+  left: 122px;
+`;
+
+const StyledHeader = styled.h2`
+  font-size: 18px;
+  padding-left: 15px;
+  line-height: 24px;
+`;
+
+const StyledItemGroup = styled(Item.Group)`
+  padding-left: 15px;
+`;
+
+const StyledInput = styled(Input)`
+  width: 280px;
+  height: 32px;
+  top: 8px;
+`;
 
 class Searchbar extends Component {
-  state = {
-    searchText: '',
-  }
-
-  resetSearch = () => {
-    const { reset } = this.props;
-    this.setState({ searchText: '' }, () => reset());
-  }
 
   getSearchSuggesstions = (value) => {
     const { search } = this.props;
@@ -26,37 +46,48 @@ class Searchbar extends Component {
   fetchResults = value => this.getSearchSuggesstions(value);
 
   updateCollection = debounce(value =>
-    this.fetchResults(value), debounceDelay);
+    this.fetchResults(value), DEBOUNCE_DELAY);
 
   updateInputValue = inputValue => this.updateCollection(inputValue);
 
   handleSearchChange = (ev, { value }) => {
+    const { reset } = this.props;
+
     if (value.length < 1) {
-      return this.resetSearch();
+      return reset();
     }
-    this.setState({ searchText: value }, () => this.updateInputValue(value));
+    this.updateInputValue(value);
   }
 
   render() {
     const { loading, results } = this.props;
-    const { searchText } = this.state;
+    const { orgs = [], contacts = [], contactGroups = [] } = results;
 
     return (
-      <Search
-        loading={loading}
-        value={searchText}
-        results={results}
-        onSearchChange={this.handleSearchChange}
-        resultRenderer={SearchResults}
-        {...this.props}
-       />
+      <Fragment>
+      <StyledInput loading={loading} icon='search' placeholder='Search here...' onChange={this.handleSearchChange} />
+      <StyledSearchContent>
+        <StyledHeader>Orgs</StyledHeader>
+        <StyledItemGroup>
+          <Orgs orgs={orgs} />
+        </StyledItemGroup>
+        <StyledHeader>Contacts</StyledHeader>
+        <StyledItemGroup>
+          <Contacts contacts={contacts} />
+        </StyledItemGroup>
+        <StyledHeader>Groups</StyledHeader>
+        <StyledItemGroup>
+          <ContactGroups contactGroups={contactGroups} />
+        </StyledItemGroup>
+      </StyledSearchContent>
+      </Fragment>
     )
   }
 }
 
 Searchbar.propTypes = {
   loading: PropTypes.bool,
-  results: PropTypes.array,
+  results: PropTypes.object,
   search: PropTypes.func.isRequired,
 };
 
