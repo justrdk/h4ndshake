@@ -36,12 +36,6 @@ const StyledItemGroup = styled(Item.Group)`
   padding-bottom: 15px;
 `;
 
-const StyledNoResults = styled.span`
-  padding-left: 15px;
-  color: #000000;
-  font-size: 16px;
-`;
-
 class Searchbar extends Component {
 
   getSearchSuggesstions = (value) => {
@@ -71,27 +65,39 @@ class Searchbar extends Component {
 
     return (
       <Fragment>
-      <StyledInput loading={loading} icon='search' placeholder='Search here...' onChange={this.handleSearchChange} />
-      {(orgs.length > 0 || contacts.length > 0 || contactGroups.length > 0) && <StyledSearchContent>
-        <StyledHeader>Orgs</StyledHeader>
-        <StyledItemGroup>
-          {orgs.length > 0
-            ? <Orgs orgs={orgs} />
-            : <StyledNoResults> No Organizations Found </StyledNoResults> }
-        </StyledItemGroup>
-        <StyledHeader>Contacts</StyledHeader>
-        <StyledItemGroup>
-          {contacts.length > 0
-            ? <Contacts contacts={contacts} />
-            : <StyledNoResults> No Contacts Found </StyledNoResults> }
-        </StyledItemGroup>
-        <StyledHeader>Groups</StyledHeader>
-        <StyledItemGroup>
-         {contactGroups.length > 0
-          ? <ContactGroups contactGroups={contactGroups} />
-          : <StyledNoResults> No Groups Found </StyledNoResults> }
-        </StyledItemGroup>
-      </StyledSearchContent>}
+        <StyledInput loading={loading} icon='search' placeholder='Search here...' onChange={this.handleSearchChange} />
+        {(orgs.length > 0 || contacts.length > 0 || contactGroups.length > 0)
+          &&
+          <StyledSearchContent>
+            {orgs.length > 0
+              &&
+              <Fragment>
+                <StyledHeader>Orgs</StyledHeader>
+                <StyledItemGroup>
+                  <Orgs orgs={orgs} />
+                </StyledItemGroup>
+              </Fragment>
+            }
+            {contacts.length > 0
+              && 
+              <Fragment>
+                <StyledHeader>Contacts</StyledHeader>
+                <StyledItemGroup>
+                  <Contacts contacts={contacts} />
+                </StyledItemGroup>
+              </Fragment>
+            }
+            {contactGroups.length > 0
+              &&
+              <Fragment>
+                <StyledHeader>Groups</StyledHeader>
+                <StyledItemGroup>
+                 <ContactGroups contactGroups={contactGroups} />
+                </StyledItemGroup>
+              </Fragment>
+            }
+          </StyledSearchContent>
+        }
       </Fragment>
     )
   }
