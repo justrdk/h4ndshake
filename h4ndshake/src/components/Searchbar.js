@@ -16,24 +16,30 @@ const StyledSearchContent = styled.div`
   overflow: auto;
   border: 1px solid #ddd;
   z-index: 1;
-  top: 68px;
-  left: 122px;
+  top: 50px;
+  left: 125px;
 `;
 
 const StyledHeader = styled.h2`
   font-size: 18px;
+  padding-top: 5px;
   padding-left: 15px;
   line-height: 24px;
-`;
-
-const StyledItemGroup = styled(Item.Group)`
-  padding-left: 15px;
 `;
 
 const StyledInput = styled(Input)`
   width: 280px;
   height: 32px;
-  top: 8px;
+`;
+
+const StyledItemGroup = styled(Item.Group)`
+  padding-bottom: 15px;
+`;
+
+const StyledNoResults = styled.span`
+  padding-left: 15px;
+  color: #000000;
+  font-size: 16px;
 `;
 
 class Searchbar extends Component {
@@ -66,20 +72,26 @@ class Searchbar extends Component {
     return (
       <Fragment>
       <StyledInput loading={loading} icon='search' placeholder='Search here...' onChange={this.handleSearchChange} />
-      <StyledSearchContent>
+      {(orgs.length > 0 || contacts.length > 0 || contactGroups.length > 0) && <StyledSearchContent>
         <StyledHeader>Orgs</StyledHeader>
         <StyledItemGroup>
-          <Orgs orgs={orgs} />
+          {orgs.length > 0
+            ? <Orgs orgs={orgs} />
+            : <StyledNoResults> No Organizations Found </StyledNoResults> }
         </StyledItemGroup>
         <StyledHeader>Contacts</StyledHeader>
         <StyledItemGroup>
-          <Contacts contacts={contacts} />
+          {contacts.length > 0
+            ? <Contacts contacts={contacts} />
+            : <StyledNoResults> No Contacts Found </StyledNoResults> }
         </StyledItemGroup>
         <StyledHeader>Groups</StyledHeader>
         <StyledItemGroup>
-          <ContactGroups contactGroups={contactGroups} />
+         {contactGroups.length > 0
+          ? <ContactGroups contactGroups={contactGroups} />
+          : <StyledNoResults> No Groups Found </StyledNoResults> }
         </StyledItemGroup>
-      </StyledSearchContent>
+      </StyledSearchContent>}
       </Fragment>
     )
   }

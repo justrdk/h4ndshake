@@ -2,18 +2,19 @@ import React from 'react';
 import { Menu, Dropdown } from 'semantic-ui-react';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
-import Logo from './Logo';
+import { NavbarLogo } from './Logos';
 
 const StyledMenu = styled(Menu)`
   padding: 10px;
+  height: 50px;
 `;
 
-const Navbar = () => <StyledMenu size='small'
+const Navbar = () => <StyledMenu
   borderless
   attached='top'
   className='top-menu'>
   <Menu.Menu position='left'>
-    <Menu.Item header><Logo /></Menu.Item>
+    <Menu.Item header><NavbarLogo /></Menu.Item>
     <Searchbar />
   </Menu.Menu>
   <Menu.Menu position='left'>
