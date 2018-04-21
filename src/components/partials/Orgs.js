@@ -35,6 +35,14 @@ Org.propTypes = {
   city: PropTypes.string.isRequired,
 };
 
-const Orgs = ({ orgs }) => orgs.map(({ name, type, city}, index) => <Org key={index} name={name} type={type} city={city} />) 
+const Orgs = ({ orgs }) => orgs.map(({ name, type, city}, index) => <Org key={index} name={name} type={type} city={city} />);
+
+Orgs.propTypes = {
+  orgs: PropTypes.array,
+};
+
+Orgs.defaultProps = {
+  orgs: [],
+};
 
 export default Orgs;
