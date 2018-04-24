@@ -40,7 +40,7 @@ class Searchbar extends Component {
 
   getSearchSuggesstions = (value) => {
     const { search } = this.props;
-    search(value);
+    value.trim().length > 1 && search(value);
   }
 
   fetchResults = value => this.getSearchSuggesstions(value);
@@ -53,8 +53,8 @@ class Searchbar extends Component {
   handleSearchChange = (ev, { value }) => {
     const { reset } = this.props;
 
-    if (value.length < 1) {
-      return reset();
+    if (value === '') {
+      reset();
     }
     this.updateInputValue(value);
   }
